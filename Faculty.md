@@ -5,7 +5,7 @@
 
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FtpBc3ngEj5mgbNZW914Q%2Fimage.png?alt=media&token=7fba467f-3ef9-4a6f-a159-03292b099278 "nmap results")
 
-##### The login page was vulnerable to SQLi, but I couldn't extract any useful information. Next, I tried enumerating directories and subdomains with ffuf.
+##### The login page was vulnerable to SQLi, but I couldn't extract any useful information. Next, I employed the tool called ffuf to discover the subdomain. Through its usage, I was able to identify the subdomain.
 ```bash
 ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -H "HOST: FUZZ.faculty.htb" -u http://faculty.htb -mc 200
 ```
@@ -15,18 +15,18 @@ ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.
 ##### Downloading the pdf from the admin panel, I found the app was using mpdf. A quick search with searchsploit shows multiple vulnerabilities
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FprphWunbnrSB9vY4M32D%2Fimage.png?alt=media&token=5b78ff0c-0b6f-46b8-a589-bf2323480d49 "searchsploit results")
 
-##### Using the exploit, I was able to grab a few files from the server. I found credentials for the user `gbyolo` in the `db_connect.php` file.
+##### I was able to grab a few files from the server. I found credentials for the user `gbyolo` in the `db_connect.php` file.
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FvWeeHIjZNECM0EfQsnv0%2Fimage.png?alt=media&token=da855f14-a017-4844-bcf0-9be0d54d9222 "db_connect.php")
 
 ##### ssh into `gbyolo` using the found credentials
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2F33r9Xst9PFRyqnpjHyjG%2Fimage.png?alt=media&token=8be8d48b-6f5d-4748-9af7-8dcc7a9c08d0 "foothold")
 
-##### In `/var/mail` I found a file titled `gbyolo`. It says that `gbyolo` can manage git repositories belonging to the faculty group. I also run `sudo -l`, with the found password, to see what sudo permissions gbyolo has.
+##### I discovered a file named `gbyolo` within the `/var/mail` directory. According to its contents, `gbyolo` possesses the ability to oversee git repositories associated with the faculty group. In addition, I executed the command `sudo -l` using the obtained password to determine the specific sudo privileges assigned to gbyolo.
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2F33r9Xst9PFRyqnpjHyjG%2Fimage.png?alt=media&token=8be8d48b-6f5d-4748-9af7-8dcc7a9c08d0 "gbyolo file")
 
 [This hackerone report was helpfull for the next step](https://hackerone.com/reports/728040)
 
-##### Using the same exploit, run `sudo -u developer meta-git clone 'sss | cat ~/.ssh/id_rsa'`
+##### Using the exploit, run `sudo -u developer meta-git clone 'sss | cat ~/.ssh/id_rsa'`
 [alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FsKtY25lSommhunlw5kUf%2Fimage.png?alt=media&token=a33d4792-104b-44c8-8630-6ca691890b69 "id_rsa")
 
 ##### ssh into the developer account after giving `id_rsa` proper permissions. `chmod 600 id_rsa`
@@ -35,9 +35,9 @@ ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.
 ##### Run linpeas on the target
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FUb7VQxgMw9z7rt8zbwr1%2Fimage.png?alt=media&token=3c5cfccc-1b1a-4ba6-b069-4362f6be46e4 "linpeas output")
 
-##### Running `ps aux | grep root | grep python3` can get you the processes needed as well.
+##### Running `ps aux | grep root | grep python3` will get the vulnerable process as well.
 
-##### Use gdb to hijack the process
+##### Use gdb to hijack the process and get root
 
 ```gbd
 (gbd) call (void)system("chmod u+s /bin/bash")
