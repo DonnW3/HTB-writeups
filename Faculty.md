@@ -5,14 +5,14 @@
 
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FtpBc3ngEj5mgbNZW914Q%2Fimage.png?alt=media&token=7fba467f-3ef9-4a6f-a159-03292b099278 "nmap results")
 
-##### The login page was vulnerable to SQLi, but I couldn't extract any useful information. Next, I tried ffuf to enumerate directories and subdomains.
+##### The login page was vulnerable to SQLi, but I couldn't extract any useful information. Next, I tried enumerating directories and subdomains with ffuf.
 ```bash
 ffuf -w /usr/share/wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -H "HOST: FUZZ.faculty.htb" -u http://faculty.htb -mc 200
 ```
-##### No subdomains but I found the `/admin/login` page. I was able to login with `' OR 1=1#` as the username.
+##### No subdomains but I found the `/admin/login` page. I was able to login using `' OR 1=1#` as the username.
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FCg6itFHlBhhiOALJZP5r%2Fimage.png?alt=media&token=30dde0de-b2e9-4fe5-b80f-27395a94e1c5 "admin login")
 
-##### I downloaded a pdf I found on the admin panel. I found the app was using mpdf. Using searchsploit, I found multiple vulnerabilites
+##### Downloading the pdf from the admin panel, I found the app was using mpdf. A quick search with searchsploit shows multiple vulnerabilities
 ![alt-text](https://files.gitbook.com/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fy8s2zVHMWg1AbBm8ZLN3%2Fuploads%2FprphWunbnrSB9vY4M32D%2Fimage.png?alt=media&token=5b78ff0c-0b6f-46b8-a589-bf2323480d49 "searchsploit results")
 
 ##### Using the exploit, I was able to grab a few files from the server. I found credentials for the user `gbyolo` in the `db_connect.php` file.
